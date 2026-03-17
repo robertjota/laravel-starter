@@ -3,15 +3,30 @@ Admin Panel basado en Laravel, bootstrap 5, adminLTE 3 con roles y permisos inte
 
 ## Historial de Versiones
 
-- **Laravel 12** (actual): Actualizado a Laravel 12.x
+- **v2.0.0** (actual): Mejoras y nuevas funcionalidades
+- **Laravel 12**: Actualizado a Laravel 12.x
 - **Laravel 11**: Versión anterior disponible en tag `v1.0-laravel11`
 
-## Características
+## Características v2.0.0
 
+### Funcionalidades Core
 - jeroennoten/Laravel-AdminLTE
-- Roles y permisos basado en Laravel Permissions
+- Roles y permisos basado en Laravel Permissions (Spatie)
 - Datatables integrada
 - SweetAlert2 integrado
+- Exportación Excel (Users, Roles)
+- Notificaciones por email
+
+### Mejoras de Código
+- **Form Requests**: Validación robusta y reutilizable
+- **Laravel Policies**: Control de acceso seguro
+- **Soft Deletes**: Recuperar registros eliminados
+- **Auditable Trait**: Logs de actividad
+- **Model Scopes**: Filtros reutilizables
+- **API Resources**: Para consumo API
+- **Helpers**: Funciones utilitarias
+- **Traducciones**: Español completo
+- **Constantes/Enums**: Valores centralizados
 
 ## Requisitos
 
@@ -74,7 +89,7 @@ _Genere una nueva Key para el proyecto con_
 php artisan key:generate
 ```
 
-_Corra las migraciones del proyecto con_
+_Ejecute las migraciones (incluye Soft Deletes)_
 
 ```
 php artisan migrate
