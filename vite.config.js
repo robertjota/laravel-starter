@@ -21,5 +21,12 @@ export default defineConfig({
         hmr: {
             host: 'localhost'
         }
+    },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                silenceDeprecations: ['import', 'global-builtin', 'color-functions', 'if-function']
+            }
+        }
     }
 });
