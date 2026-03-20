@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('settings')) {
-    function settings(string $key = null, $default = null)
+    function settings(?string $key = null, mixed $default = null)
     {
         if ($key === null) {
             return config('system');

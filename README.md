@@ -1,13 +1,25 @@
 # Laravel Starter
-Admin Panel basado en Laravel, bootstrap 5, adminLTE 3 con roles y permisos integrado
+Admin Panel basado en Laravel 12, Bootstrap 5, AdminLTE 3 con roles y permisos integrado.
 
 ## Historial de Versiones
 
-- **v2.0.0** (actual): Mejoras y nuevas funcionalidades
+- **v2.0.1** (actual): Compatibilidad PHP 8.2-8.4 y correcciones de deprecated
+- **v2.0.0**: Mejoras y nuevas funcionalidades
 - **Laravel 12**: Actualizado a Laravel 12.x
 - **Laravel 11**: Versión anterior disponible en tag `v1.0-laravel11`
 
-## Características v2.0.0
+## Compatibilidad PHP
+
+- **PHP 8.2** - Compatible
+- **PHP 8.3** - Compatible
+- **PHP 8.4** - Compatible (con deprecated warnings resueltos)
+
+## Características v2.0.1
+
+### Correcciones
+- Resuelto deprecated de tipos nullable en helpers.php para PHP 8.4
+- Corregido typo en ruta de eliminación de permisos
+- Compatibilidad total con PHP 8.2 a 8.4
 
 ### Funcionalidades Core
 - jeroennoten/Laravel-AdminLTE
@@ -30,7 +42,7 @@ Admin Panel basado en Laravel, bootstrap 5, adminLTE 3 con roles y permisos inte
 
 ## Requisitos
 
-- PHP 8.2+
+- PHP 8.2+ (Probado en 8.2, 8.3, 8.4)
 - Composer 2.0+
 - Node.js 18+
 - MySQL 8.0+
@@ -116,6 +128,30 @@ _Si todo está correcto puede acceder al proyecto en la dirección http://localh
 | Super Admin | superadmin@gmail.com | password |
 | Admin | admin@gmail.com | password |
 | Usuario | usuario@gmail.com | password |
+
+### Estructura del Proyecto
+
+```
+app/
+├── Console/
+├── Enums/               # Enums del sistema
+├── Exceptions/
+├── Exports/             # Exportaciones Excel
+├── Helpers/             # Funciones auxiliares
+├── Http/
+│   ├── Controllers/
+│   │   ├── Admin/       # Controladores de administración
+│   │   ├── Auth/        # Controladores de autenticación
+│   │   └── Controller.php
+│   ├── Middleware/
+│   └── Requests/
+│       └── Admin/      # Form Requests para validación
+├── Models/
+├── Notifications/       # Notificaciones del sistema
+├── Policies/            # Políticas de acceso
+├── Providers/
+└── Traits/              # Traits reutilizables
+```
 
 ### Personalización
 

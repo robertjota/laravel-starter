@@ -101,6 +101,6 @@ class PermissionController extends Controller
     {
         $permission->delete();
 
-        return to_route('admin.permmisions.index')->with('info', __('Deleted successfully'));
+        return to_route('admin.permissions.index')->with('info', __('Deleted successfully'));
     }
 }
