@@ -33,10 +33,11 @@
 @stop
 
 @section('js')
-    <script type="text/javascript" src="{{ env(' APP_URL') }}/js/recibo.js"></script>
     <script>
         $(document).ready(function() {
-            $('.sel2').select2();
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            });
         });
     </script>
 @stop
