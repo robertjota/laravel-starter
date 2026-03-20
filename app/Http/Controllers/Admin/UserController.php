@@ -31,14 +31,14 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'role' => 'required'
+            'role_id' => 'required'
         ]);
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
-        $user->assignRole($request->input('role'));
+        $user->assignRole($request->role_id);
 
         return redirect()->route('admin.users.index')
             ->with('info', __('Add successfully'));
@@ -65,15 +65,15 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user['id'],
             'password' => 'same:confirm-password',
-            'role' => 'required'
+            'role_id' => 'required'
         ]);
-        $input = $request->except(['password']);
+        $input = $request->all();
         if ($request->filled('password')) {
             $input['password'] = Hash::make($request->password);
         }
 
         $user->update($input);
-        $user->roles()->sync([$request->role]);
+        $user->roles()->sync([$request->role_id]);
 
         return to_route('admin.users.index')
             ->with('info', __('Update successfully'));

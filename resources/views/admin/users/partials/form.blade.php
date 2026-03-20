@@ -37,17 +37,16 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <label for="role">Seleccionar Rol</label>
-            <div class="mt-2">
+            <label for="role_id">Seleccionar Rol</label>
+            <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required>
+                <option value="">-- Seleccionar Rol --</option>
                 @foreach ($roles as $role)
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="role" id="role_{{ $role->id }}" value="{{ $role->id }}"
-                            {{ isset($userRole) ? ($role->id == $userRole ? 'checked' : '') : '' }}>
-                        <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->name }}</label>
-                    </div>
+                    <option value="{{ $role->id }}" {{ old('role_id', $userRole) == $role->id ? 'selected' : '' }}>
+                        {{ $role->name }}
+                    </option>
                 @endforeach
-            </div>
-            @error('role')
+            </select>
+            @error('role_id')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
