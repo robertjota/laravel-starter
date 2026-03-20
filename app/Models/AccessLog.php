@@ -10,6 +10,7 @@ class AccessLog extends Model
     protected $fillable = [
         'user_id',
         'event',
+        'session_id',
         'ip_address',
         'user_agent',
         'device',
@@ -34,6 +35,7 @@ class AccessLog extends Model
         return static::create([
             'user_id' => $user->id,
             'event' => 'login',
+            'session_id' => session()->getId(),
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
             'device' => self::getDeviceInfo()['device'],
@@ -43,16 +45,14 @@ class AccessLog extends Model
         ]);
     }
 
-    public static function logLogout(User $user): void
+    public static function logLogout(string $sessionId): void
     {
-        $lastLogin = static::where('user_id', $user->id)
+        $login = static::where('session_id', $sessionId)
             ->where('event', 'login')
-            ->whereNull('logout_at')
-            ->latest()
             ->first();
 
-        if ($lastLogin) {
-            $lastLogin->update([
+        if ($login) {
+            $login->update([
                 'event' => 'logout',
                 'logout_at' => now(),
             ]);
@@ -61,7 +61,7 @@ class AccessLog extends Model
 
     private static function getDeviceInfo(): array
     {
-        $userAgent = request()->userAgent();
+        $userAgent = request()->userAgent() ?? '';
         
         $device = 'Desktop';
         $platform = 'Unknown';

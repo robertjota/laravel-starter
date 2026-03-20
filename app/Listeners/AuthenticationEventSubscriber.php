@@ -21,7 +21,7 @@ class AuthenticationEventSubscriber
     public function handleLogout(Logout $event): void
     {
         if ($event->user) {
-            AccessLog::logLogout($event->user);
+            AccessLog::logLogout(session()->getId());
             
             Activity::log('Cierre de sesion', $event->user, 'logout', [
                 'email' => $event->user->email,
