@@ -37,11 +37,6 @@ class UserPolicy
         return $user->hasPermissionTo('admin.users.destroy');
     }
 
-    public function assignRoles(User $user): bool
-    {
-        return $user->hasPermissionTo('admin.users.asignar');
-    }
-
     public function restore(User $user, User $model): bool
     {
         return $user->hasPermissionTo('admin.users.restore');

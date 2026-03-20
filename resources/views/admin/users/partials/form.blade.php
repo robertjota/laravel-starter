@@ -37,18 +37,17 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <div>
-                <label for="roles[]">Seleccionar Roles</label>
+            <label for="role">Seleccionar Rol</label>
+            <div class="mt-2">
+                @foreach ($roles as $role)
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="role" id="role_{{ $role->id }}" value="{{ $role->id }}"
+                            {{ isset($userRole) ? ($role->id == $userRole ? 'checked' : '') : '' }}>
+                        <label class="form-check-label" for="role_{{ $role->id }}">{{ $role->name }}</label>
+                    </div>
+                @endforeach
             </div>
-            @foreach ($roles as $role)
-                <div style='display:inline-block'>
-                    <label class="mr-3">
-                        <input class="mr-1" data-inverse="true" data-size="mini" data-on-color="success" data-on-text="SI" data-off-text="NO" type="checkbox" name="roles[]" id="roles" value="{{ $role->id }}" {{ isset($userRole) ? (in_array($role->id, $userRole) ? 'checked' : '') : '' }}>
-                        <span class="ml-2">{{ $role->name }}</span>
-                    </label>
-                </div>
-            @endforeach
-            @error('roles[]')
+            @error('role')
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
