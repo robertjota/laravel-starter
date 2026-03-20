@@ -22,7 +22,8 @@ class UserController extends Controller
     public function create(): View
     {
         $roles = Role::all();
-        return view('admin.users.create', compact('roles'));
+        $userRole = null;
+        return view('admin.users.create', compact('roles', 'userRole'));
     }
 
     public function store(Request $request): RedirectResponse
