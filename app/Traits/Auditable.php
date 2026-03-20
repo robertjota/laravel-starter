@@ -2,12 +2,11 @@
 
 namespace App\Traits;
 
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Activity;
 
 trait Auditable
 {
-    public static function bootAuditable()
+    public static function bootAuditable(): void
     {
         static::created(function ($model) {
             $model->recordActivity('created');
@@ -30,29 +29,26 @@ trait Auditable
 
     public function recordActivity(string $event): void
     {
-        $description = $this->getActivityDescription($event);
-        
-        $userId = Auth::id();
-        
-        Log::info("AUDIT: {$description}", [
-            'model' => static::class,
-            'model_id' => $this->id,
-            'event' => $event,
-            'user_id' => $userId,
-            'old_attributes' => $this->getOriginal(),
-            'new_attributes' => $this->getAttributes(),
-        ]);
+        Activity::log(
+            description: $this->getActivityDescription($event),
+            model: $this,
+            event: $event,
+            properties: [
+                'old_attributes' => $this->getOriginal(),
+                'new_attributes' => $this->getAttributes(),
+            ]
+        );
     }
 
     protected function getActivityDescription(string $event): string
     {
         $modelName = class_basename(static::class);
-        
+
         return match ($event) {
-            'created' => "El usuario {$modelName} fue creado",
-            'updated' => "El usuario {$modelName} fue actualizado",
-            'deleted' => "El usuario {$modelName} fue eliminado",
-            'restored' => "El usuario {$modelName} fue restaurado",
+            'created' => "Registro de {$modelName} creado",
+            'updated' => "Registro de {$modelName} actualizado",
+            'deleted' => "Registro de {$modelName} eliminado",
+            'restored' => "Registro de {$modelName} restaurado",
             default => "Evento {$event} en {$modelName}",
         };
     }

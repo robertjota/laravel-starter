@@ -332,6 +332,25 @@ return [
                 ]
             ],
         ],
+        [
+            'text'  => 'Auditoria',
+            'icon'  => 'fas fa-fw fa-clipboard-list',
+            'can'   => 'admin.audits.activities',
+            'submenu'   => [
+                [
+                    'text'  => 'Actividades',
+                    'route' => 'admin.audits.activities',
+                    'icon'  => 'fas fa-fw fa-history',
+                    'can'   => 'admin.audits.activities',
+                ],
+                [
+                    'text'  => 'Accesos',
+                    'route' => 'admin.audits.access-logs',
+                    'icon'  => 'fas fa-fw fa-sign-in-alt',
+                    'can'   => 'admin.audits.access-logs',
+                ],
+            ],
+        ],
         ['header'   => 'account_settings'],
         [
             'text'  => 'Mi Cuenta',
