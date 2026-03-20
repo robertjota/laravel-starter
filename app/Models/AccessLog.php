@@ -32,10 +32,23 @@ class AccessLog extends Model
 
     public static function logLogin(User $user): self
     {
+        $sessionId = session()->getId();
+        
+        // Verificar si ya existe un login reciente con esta sesion (evitar duplicados)
+        $existingLogin = static::where('session_id', $sessionId)
+            ->where('event', 'login')
+            ->where('user_id', $user->id)
+            ->where('created_at', '>=', now()->subSeconds(10))
+            ->first();
+            
+        if ($existingLogin) {
+            return $existingLogin;
+        }
+        
         return static::create([
             'user_id' => $user->id,
             'event' => 'login',
-            'session_id' => session()->getId(),
+            'session_id' => $sessionId,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
             'device' => self::getDeviceInfo()['device'],
@@ -47,6 +60,7 @@ class AccessLog extends Model
 
     public static function logLogout(string $sessionId): void
     {
+        // Buscar el login activo de esta sesion
         $login = static::where('session_id', $sessionId)
             ->where('event', 'login')
             ->first();

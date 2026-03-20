@@ -11,11 +11,19 @@ class AuthenticationEventSubscriber
 {
     public function handleLogin(Login $event): void
     {
-        AccessLog::logLogin($event->user);
+        // Verificar si ya se registró login recientemente (evitar duplicados)
+        $existingActivity = Activity::where('user_id', $event->user->id)
+            ->where('event', 'login')
+            ->where('created_at', '>=', now()->subSeconds(10))
+            ->first();
+            
+        if (!$existingActivity) {
+            Activity::log('Inicio de sesion exitoso', $event->user, 'login', [
+                'email' => $event->user->email,
+            ]);
+        }
         
-        Activity::log('Inicio de sesion exitoso', $event->user, 'login', [
-            'email' => $event->user->email,
-        ]);
+        AccessLog::logLogin($event->user);
     }
 
     public function handleLogout(Logout $event): void
