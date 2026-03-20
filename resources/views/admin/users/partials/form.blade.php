@@ -1,10 +1,4 @@
 <div class="row">
-    <style>
-        .height-input {
-            height: calc(1.8125rem + 0.75rem) !important;
-            padding: 0.375rem 0.75rem !important;
-        }
-    </style>
     <div class="col-xs-12 col-sm-12 col-md-6">
         <div class="form-group">
             <label for="name">{{ __('Name') }}</label>
@@ -44,7 +38,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6">
         <div class="form-group">
             <label for="role_id">Seleccionar Rol</label>
-            <select class="form-control height-input @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required>
+            <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required>
                 <option value="">-- Seleccionar Rol --</option>
                 @foreach ($roles as $role)
                     <option value="{{ $role->id }}" {{ old('role_id', $userRole) == $role->id ? 'selected' : '' }}>
