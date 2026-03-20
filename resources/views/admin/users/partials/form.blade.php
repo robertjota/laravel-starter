@@ -38,7 +38,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6">
         <div class="form-group">
             <label for="role_id">Seleccionar Rol</label>
-            <select class="form-control select2bs4 @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required style="width: 100%;">
+            <select class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id" required>
                 <option value="">-- Seleccionar Rol --</option>
                 @foreach ($roles as $role)
                     <option value="{{ $role->id }}" {{ old('role_id', $userRole) == $role->id ? 'selected' : '' }}>
