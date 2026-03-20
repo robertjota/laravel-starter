@@ -4,7 +4,7 @@ Todos los cambios notables de este proyecto serán documentados en este archivo.
 
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/).
 
-## [2.0.1] - 2026-03-19
+## [2.0.1] - 2026-03-20
 
 ### Added
 - Sistema de auditoria completo con registro de actividades
@@ -12,23 +12,28 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1
 - Modelo `AccessLog` para registrar login/logout con IP, dispositivo y navegador
 - Controlador `AuditController` con vistas para actividades y logs de acceso
 - `AuditPolicy` con soporte para Super Admin
-- Listener `AuthenticationEventSubscriber` para eventos de autenticacion
 - Menu de auditoria en sidebar
+- Middleware `LogAccess` para captura de login
+- Campo `session_id` en AccessLog para vincular login/logout
 
 ### Fixed
 - Compatibilidad PHP 8.4: Corregido deprecated warning en funcion `settings()` del helper
 - Corregido typo en ruta de eliminacion de permisos (`permmisions` -> `permissions`)
 - Select2 removido de configuracion global (conflictaba con estilos)
+- Deduplicacion de registros de acceso usando session_id
+- Metodo down() duplicado en migracion de soft deletes
 
 ### Changed
 - Trait `Auditable` ahora usa modelo `Activity` en lugar de solo logs
 - README.md actualizado con matriz de compatibilidad PHP
 - Super Admin tiene acceso total sin necesidad de permisos individuales
+- Sistema de logs usa middleware en lugar de eventos (mas control)
 
 ### Refactored
 - Seleccion de roles: de multi-select (checkboxes) a select unico
 - Simplificada logica de actualizacion de contrasena en UserController
 - Eliminada vista y metodos de asignar rol (funcionalidad unificada en edit)
+- LoginController ahora maneja logout directamente
 
 ## [2.0.0] - 2026-03-17
 
