@@ -13,6 +13,11 @@ El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1
 ### Changed
 - README.md actualizado con matriz de compatibilidad PHP
 
+### Refactored
+- Selección de roles: de multi-select (checkboxes) a rol único (radio buttons)
+- Simplificada lógica de actualización de contraseña en UserController
+- Eliminada vista y métodos de asignar rol (funcionalidad unificada en edit)
+
 ## [2.0.0] - 2026-03-17
 
 ### Added
