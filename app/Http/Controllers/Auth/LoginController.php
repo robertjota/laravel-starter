@@ -5,36 +5,47 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use App\Models\AccessLog;
+use App\Models\Activity;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        $user = auth()->user();
+        
+        if ($user) {
+            $sessionId = $request->session()->getId();
+            
+            AccessLog::where('user_id', $user->id)
+                ->where('session_id', $sessionId)
+                ->where('event', 'login')
+                ->update([
+                    'event' => 'logout',
+                    'logout_at' => now(),
+                ]);
+
+            Activity::log('Cierre de sesion', $user, 'logout', [
+                'email' => $user->email,
+            ]);
+        }
+
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return $this->loggedOut($request) ?: redirect('/');
     }
 }
